@@ -46,11 +46,13 @@
   * @retval       interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t __weak stts22h_read_reg(stmdev_ctx_t *ctx, uint8_t reg,
+int32_t __weak stts22h_read_reg(const stmdev_ctx_t *ctx, uint8_t reg,
                                 uint8_t *data,
                                 uint16_t len)
 {
   int32_t ret;
+
+  if (ctx == NULL) return -1;
 
   ret = ctx->read_reg(ctx->handle, reg, data, len);
 
@@ -67,11 +69,13 @@ int32_t __weak stts22h_read_reg(stmdev_ctx_t *ctx, uint8_t reg,
   * @retval       interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t __weak stts22h_write_reg(stmdev_ctx_t *ctx, uint8_t reg,
+int32_t __weak stts22h_write_reg(const stmdev_ctx_t *ctx, uint8_t reg,
                                  uint8_t *data,
                                  uint16_t len)
 {
   int32_t ret;
+
+  if (ctx == NULL) return -1;
 
   ret = ctx->write_reg(ctx->handle, reg, data, len);
 
@@ -116,7 +120,7 @@ float_t stts22h_from_lsb_to_celsius(int16_t lsb)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_data_rate_set(stmdev_ctx_t *ctx,
+int32_t stts22h_temp_data_rate_set(const stmdev_ctx_t *ctx,
                                    stts22h_odr_temp_t val)
 {
   stts22h_software_reset_t software_reset;
@@ -197,7 +201,7 @@ int32_t stts22h_temp_data_rate_set(stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_data_rate_get(stmdev_ctx_t *ctx,
+int32_t stts22h_temp_data_rate_get(const stmdev_ctx_t *ctx,
                                    stts22h_odr_temp_t *val)
 {
   stts22h_ctrl_t ctrl;
@@ -254,7 +258,7 @@ int32_t stts22h_temp_data_rate_get(stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_block_data_update_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t stts22h_block_data_update_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   stts22h_ctrl_t ctrl;
   int32_t ret;
@@ -278,7 +282,7 @@ int32_t stts22h_block_data_update_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_block_data_update_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t stts22h_block_data_update_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -295,7 +299,7 @@ int32_t stts22h_block_data_update_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_flag_data_ready_get(stmdev_ctx_t *ctx,
+int32_t stts22h_temp_flag_data_ready_get(const stmdev_ctx_t *ctx,
                                          uint8_t *val)
 {
   stts22h_status_t status;
@@ -337,7 +341,7 @@ int32_t stts22h_temp_flag_data_ready_get(stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temperature_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t stts22h_temperature_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -369,7 +373,7 @@ int32_t stts22h_temperature_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_dev_id_get(stmdev_ctx_t *ctx, uint8_t *buff)
+int32_t stts22h_dev_id_get(const stmdev_ctx_t *ctx, uint8_t *buff)
 {
   int32_t ret;
 
@@ -386,7 +390,7 @@ int32_t stts22h_dev_id_get(stmdev_ctx_t *ctx, uint8_t *buff)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_dev_status_get(stmdev_ctx_t *ctx,
+int32_t stts22h_dev_status_get(const stmdev_ctx_t *ctx,
                                stts22h_dev_status_t *val)
 {
   stts22h_status_t status;
@@ -419,7 +423,7 @@ int32_t stts22h_dev_status_get(stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_smbus_interface_set(stmdev_ctx_t *ctx,
+int32_t stts22h_smbus_interface_set(const stmdev_ctx_t *ctx,
                                     stts22h_smbus_md_t val)
 {
   stts22h_ctrl_t ctrl;
@@ -444,7 +448,7 @@ int32_t stts22h_smbus_interface_set(stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_smbus_interface_get(stmdev_ctx_t *ctx,
+int32_t stts22h_smbus_interface_get(const stmdev_ctx_t *ctx,
                                     stts22h_smbus_md_t *val)
 {
   stts22h_ctrl_t ctrl;
@@ -480,7 +484,7 @@ int32_t stts22h_smbus_interface_get(stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_auto_increment_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t stts22h_auto_increment_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   stts22h_ctrl_t ctrl;
   int32_t ret;
@@ -505,7 +509,7 @@ int32_t stts22h_auto_increment_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_auto_increment_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t stts22h_auto_increment_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -535,7 +539,7 @@ int32_t stts22h_auto_increment_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_trshld_high_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t stts22h_temp_trshld_high_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   stts22h_temp_h_limit_t temp_h_limit;
   int32_t ret;
@@ -561,7 +565,7 @@ int32_t stts22h_temp_trshld_high_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_trshld_high_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t stts22h_temp_trshld_high_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   stts22h_temp_h_limit_t temp_h_limit;
   int32_t ret;
@@ -581,7 +585,7 @@ int32_t stts22h_temp_trshld_high_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_trshld_low_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t stts22h_temp_trshld_low_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   stts22h_temp_l_limit_t temp_l_limit;
   int32_t ret;
@@ -607,7 +611,7 @@ int32_t stts22h_temp_trshld_low_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_trshld_low_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t stts22h_temp_trshld_low_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   stts22h_temp_l_limit_t temp_l_limit;
   int32_t ret;
@@ -627,7 +631,7 @@ int32_t stts22h_temp_trshld_low_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t stts22h_temp_trshld_src_get(stmdev_ctx_t *ctx,
+int32_t stts22h_temp_trshld_src_get(const stmdev_ctx_t *ctx,
                                     stts22h_temp_trlhd_src_t *val)
 {
   stts22h_status_t status;
