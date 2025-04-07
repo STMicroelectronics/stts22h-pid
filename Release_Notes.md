@@ -70,7 +70,7 @@ This directory contains the STTS22H component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section4" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
 <label for="collapse-section4" aria-hidden="true">V2.1.0 / 06-May-2024</label>
 <div>
 
@@ -78,6 +78,18 @@ This directory contains the STTS22H component drivers.
 
 - updated README.md file with tag reference and mdelay description
 - Remove software reset register (0xC)
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section5" checked aria-hidden="true">
+<label for="collapse-section5" aria-hidden="true">V2.1.1 / 07-Apr-2025</label>
+<div>
+
+## Main changes
+
+- Fix MISRA-C errors
 
 ##
 
