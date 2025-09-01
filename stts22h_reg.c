@@ -463,9 +463,11 @@ int32_t stts22h_auto_increment_set(const stmdev_ctx_t *ctx, uint8_t val)
   */
 int32_t stts22h_auto_increment_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
+  stts22h_ctrl_t ctrl;
   int32_t ret;
 
-  ret = stts22h_read_reg(ctx, STTS22H_CTRL, (uint8_t *)&val, 1);
+  ret = stts22h_read_reg(ctx, STTS22H_CTRL, (uint8_t *)&ctrl, 1);
+  *val = ctrl.if_add_inc;
 
   return ret;
 }
