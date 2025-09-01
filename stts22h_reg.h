@@ -145,6 +145,8 @@ typedef struct
 
 /** I2C Device Address 8 bit format **/
 #define STTS22H_I2C_ADD_H       0x71U
+#define STTS22H_I2C_ADD_15K_OHM 0x79U
+#define STTS22H_I2C_ADD_56K_OHM 0x7DU
 #define STTS22H_I2C_ADD_L       0x7FU
 
 /** Device Identification (Who am I) **/
