@@ -298,7 +298,17 @@ int32_t stts22h_temperature_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
   uint8_t buff[2];
   int32_t ret;
 
-  ret = stts22h_read_reg(ctx, STTS22H_TEMP_L_OUT, buff, 2);
+  int has_autoincrement = (ctx->priv_data &&
+                      ((stts22h_priv_t *)(ctx->priv_data))->has_autoincrement == 1);
+
+  if (has_autoincrement == 1) {
+    ret = stts22h_read_reg(ctx, STTS22H_TEMP_L_OUT, buff, 2);
+  }
+  else
+  {
+    ret = stts22h_read_reg(ctx, STTS22H_TEMP_L_OUT, &buff[0], 1);
+    ret = stts22h_read_reg(ctx, STTS22H_TEMP_H_OUT, &buff[1], 1);
+  }
   *val = (int16_t)buff[1];
   *val = (*val * 256) + (int16_t)buff[0];
 
@@ -447,6 +457,10 @@ int32_t stts22h_auto_increment_set(const stmdev_ctx_t *ctx, uint8_t val)
   {
     ctrl.if_add_inc = (uint8_t)val;
     ret = stts22h_write_reg(ctx, STTS22H_CTRL, (uint8_t *)&ctrl, 1);
+    if (ret == 0 && ctx->priv_data != NULL)
+    {
+      ((stts22h_priv_t *)(ctx->priv_data))->has_autoincrement = val;
+    }
   }
 
   return ret;

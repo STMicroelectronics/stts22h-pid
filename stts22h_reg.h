@@ -281,6 +281,10 @@ int32_t stts22h_block_data_update_get(const stmdev_ctx_t *ctx,
 
 int32_t stts22h_temp_flag_data_ready_get(const stmdev_ctx_t *ctx,
                                          uint8_t *val);
+typedef struct
+{
+  uint8_t has_autoincrement;
+} stts22h_priv_t;
 
 int32_t stts22h_temperature_raw_get(const stmdev_ctx_t *ctx, int16_t *val);
 
