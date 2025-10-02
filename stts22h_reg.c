@@ -161,6 +161,7 @@ int32_t stts22h_temp_data_rate_get(const stmdev_ctx_t *ctx,
 
   ret = stts22h_read_reg(ctx, STTS22H_CTRL,
                          (uint8_t *)&ctrl, 1);
+  if (ret != 0) { return ret; }
 
   switch (ctrl.one_shot | (ctrl.freerun << 1) | (ctrl.low_odr_start <<
                                                  2) |
@@ -258,6 +259,7 @@ int32_t stts22h_temp_flag_data_ready_get(const stmdev_ctx_t *ctx,
   int32_t ret;
 
   ret = stts22h_read_reg(ctx, STTS22H_STATUS, (uint8_t *)&status, 1);
+  if (ret != 0) { return ret; }
 
   if (status.busy == PROPERTY_DISABLE)
   {
@@ -309,6 +311,9 @@ int32_t stts22h_temperature_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
     ret = stts22h_read_reg(ctx, STTS22H_TEMP_L_OUT, &buff[0], 1);
     ret = stts22h_read_reg(ctx, STTS22H_TEMP_H_OUT, &buff[1], 1);
   }
+
+  if (ret != 0) { return ret; }
+
   *val = (int16_t)buff[1];
   *val = (*val * 256) + (int16_t)buff[0];
 
@@ -359,6 +364,8 @@ int32_t stts22h_dev_status_get(const stmdev_ctx_t *ctx,
   int32_t ret;
 
   ret = stts22h_read_reg(ctx, STTS22H_STATUS, (uint8_t *)&status, 1);
+  if (ret != 0) { return ret; }
+
   val->busy = status.busy;
 
   return ret;
@@ -418,6 +425,7 @@ int32_t stts22h_smbus_interface_get(const stmdev_ctx_t *ctx,
 
   ret = stts22h_read_reg(ctx, STTS22H_CTRL,
                          (uint8_t *)&ctrl, 1);
+  if (ret != 0) { return ret; }
 
   switch (ctrl.time_out_dis)
   {
@@ -481,6 +489,8 @@ int32_t stts22h_auto_increment_get(const stmdev_ctx_t *ctx, uint8_t *val)
   int32_t ret;
 
   ret = stts22h_read_reg(ctx, STTS22H_CTRL, (uint8_t *)&ctrl, 1);
+  if (ret != 0) { return ret; }
+
   *val = ctrl.if_add_inc;
 
   return ret;
@@ -540,6 +550,8 @@ int32_t stts22h_temp_trshld_high_get(const stmdev_ctx_t *ctx, uint8_t *val)
 
   ret = stts22h_read_reg(ctx, STTS22H_TEMP_H_LIMIT,
                          (uint8_t *)&temp_h_limit, 1);
+  if (ret != 0) { return ret; }
+
   *val = temp_h_limit.thl;
 
   return ret;
@@ -586,6 +598,8 @@ int32_t stts22h_temp_trshld_low_get(const stmdev_ctx_t *ctx, uint8_t *val)
 
   ret = stts22h_read_reg(ctx, STTS22H_TEMP_L_LIMIT,
                          (uint8_t *)&temp_l_limit, 1);
+  if (ret != 0) { return ret; }
+
   *val = temp_l_limit.tll;
 
   return ret;
@@ -606,6 +620,8 @@ int32_t stts22h_temp_trshld_src_get(const stmdev_ctx_t *ctx,
   int32_t ret;
 
   ret = stts22h_read_reg(ctx, STTS22H_STATUS, (uint8_t *)&status, 1);
+  if (ret != 0) { return ret; }
+
   val->under_thl = status.under_thl;
   val->over_thh = status.over_thh;
 
